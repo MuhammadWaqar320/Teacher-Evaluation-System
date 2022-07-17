@@ -1,3 +1,24 @@
+require("dotenv").config();
+const nodemailer = require("nodemailer");
+let transporter = nodemailer.createTransport({
+  service: "gmail",
+  secure: false,
+  auth: {
+    user: process.env.EMAIL,
+    pass: process.env.APP_PASSWORD,
+  },
+  tls: {
+    rejectUnauthorized: false,
+  },
+});
+const KEYS = {
+  SECRET_KEY: "2MOe0XHFW2ZLn!tK%E8uh7LmK",
+};
+const USER_TYPE = {
+  STUDENT: "Student",
+  TEACHER: "Teacher",
+  ADMIN: "Admin",
+};
 const HTTP_STATUS = {
   CONTINUE: 100,
   OK: 200,
@@ -11,4 +32,7 @@ const HTTP_STATUS = {
 };
 module.exports = {
   HTTP_STATUS,
+  USER_TYPE,
+  KEYS,
+  transporter
 };
