@@ -1,7 +1,9 @@
-"use strict";
-const { Model } = require("sequelize");
+'use strict';
+const {
+  Model
+} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Course extends Model {
+  class Rating extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -9,16 +11,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      // many course can belong to one teacher
-      Course.belongsTo(models.Teacher, { foreignKey: "teacher_id" });
     }
   }
-  Course.init(
+  Rating.init(
     {
-      course_code: DataTypes.STRING,
-      course_name: DataTypes.STRING,
-      credit_hours: DataTypes.INTEGER,
-      courseForWhichSemester: DataTypes.STRING,
+      no_of_star: DataTypes.FLOAT,
+      feedback: DataTypes.TEXT,
       teacher_id: {
         type: DataTypes.INTEGER,
         references: {
@@ -26,11 +24,18 @@ module.exports = (sequelize, DataTypes) => {
           key: "id",
         },
       },
+      student_id: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: "Student",
+          key: "id",
+        },
+      },
     },
     {
       sequelize,
-      modelName: "Course",
+      modelName: "Rating",
     }
   );
-  return Course;
+  return Rating;
 };
