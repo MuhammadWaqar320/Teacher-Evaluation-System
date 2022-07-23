@@ -52,11 +52,15 @@ module.exports = class authService {
             console.log("mail has been sent");
           }
         });
-        return successResponse({ token: token }, HTTP_STATUS.OK, "logged in");
+        return successResponse(
+          { token: token, type: user_type, userInfo: dbResponse.dataValues },
+          HTTP_STATUS.OK,
+          "logged in"
+        );
       } else {
         return errorResponse(
           HTTP_STATUS.UNAUTHORIZED,
-          "sorry invalid credentials",
+          "sorry invalid credentials1",
           []
         );
       }

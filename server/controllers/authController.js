@@ -2,6 +2,7 @@ const { constructResponse } = require("../utils/allFunctions");
 
 const authService = new (require("../services/authService"))();
 const login = async (req, res) => {
+  console.log(req.body)
   const responseData = await authService.loginService(req.body);
   return constructResponse(res, responseData);
 };

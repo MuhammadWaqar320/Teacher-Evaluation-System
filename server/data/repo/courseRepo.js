@@ -1,10 +1,11 @@
 const { Course } = require("../models");
+const { Teacher } = require("../models");
 module.exports = class CourseRepo {
   addCourseInToDb(newAdminData) {
     return Course.create(newAdminData);
   }
   getAllCourseFromDb() {
-    return Course.findAll();
+    return Course.findAll({include:[Teacher]});
   }
   deleteCourseFromDb(id) {
     return Course.destroy({
@@ -18,6 +19,7 @@ module.exports = class CourseRepo {
       where: {
         id: id,
       },
+      include:[Teacher]
     });
   }
   updateCourseFromDb(newData, id) {

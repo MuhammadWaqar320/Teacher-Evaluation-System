@@ -14,11 +14,11 @@ module.exports = {
       feedback: {
         type: Sequelize.TEXT,
       },
-      teacher_id: {
+      TeacherId: {
         type: Sequelize.INTEGER,
         references: { model: "teachers", key: "id" },
       },
-      student_id: {
+      StudentId: {
         type: Sequelize.INTEGER,
         references:{model:"students",key:"id"}
       },

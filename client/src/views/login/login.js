@@ -4,7 +4,6 @@ import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import FormCom from '../../component/form/form';
 const Login = (props) => {
-    console.log(props.onHide)
  return (
    <Modal
      {...props}

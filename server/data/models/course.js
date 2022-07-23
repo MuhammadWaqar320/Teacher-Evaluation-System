@@ -10,16 +10,16 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       // many course can belong to one teacher
-      Course.belongsTo(models.Teacher, { foreignKey: "teacher_id" });
+      Course.belongsTo(models.Teacher, { foreignKey: "TeacherId" });
     }
   }
   Course.init(
     {
       course_code: DataTypes.STRING,
       course_name: DataTypes.STRING,
-      credit_hours: DataTypes.INTEGER,
+      credit_hours: DataTypes.FLOAT,
       courseForWhichSemester: DataTypes.STRING,
-      teacher_id: {
+      TeacherId: {
         type: DataTypes.INTEGER,
         references: {
           model: "Teacher",

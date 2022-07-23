@@ -12,6 +12,7 @@ module.exports = class CourseService {
       credit_hours: data.credit_hours,
       courseForWhichSemester: data.courseForWhichSemester,
       course_name: data.course_name,
+      TeacherId:data.TeacherId,
       createdAt: new Date(),
       updatedAt: new Date(),
     };

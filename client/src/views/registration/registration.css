@@ -1,0 +1,24 @@
+.register-class {
+  padding: 70px 0px;
+}
+.register-form-class {
+  border: 1px solid silver;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 0px 10px;
+}
+.headTitle {
+  background: linear-gradient(
+    to right,
+    #cc0e0e 0%,
+    #5b03c7,
+    #4d5e97,
+    #18c962 100%
+  );
+  -webkit-background-clip: text;
+  text-align: center;
+  margin-bottom: 10px;
+  font-family: initial;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+}

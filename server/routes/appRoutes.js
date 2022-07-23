@@ -21,11 +21,16 @@ const {
   deleteCourse,
   getCourseById,
 } = require("../controllers/courseController");
+const {
+  getRatingReport,
+  deleteRating,
+} = require("../controllers/ratingController");
 const { login, forgotPassword } = require("../controllers/authController");
 const router = express.Router();
+const {createContactus} =require("../controllers/contactusController")
 // admin routes are here
 router.post("/admin/create", createAdmin);
-// admin routes are here
+// student routes are here
 router.post("/student/create", createStudent);
 router.get("/student/getall", retreiveAllStudent);
 router.delete("/student/delete/:id", deleteStudent);
@@ -44,8 +49,11 @@ router.delete("/course/delete/:id", deleteCourse);
 router.put("/course/update/:id", updateCourse);
 router.get("/course/getbyid/:id", getCourseById);
 
-router.get("/tes/login", login);
+router.post("/tes/login", login);
 router.post("/tes/forgotpassword",forgotPassword)
+router.post("/contact", createContactus);
+router.get("/rating/getinfo",getRatingReport)
+router.delete("/rating/delete/:id",deleteRating);
 module.exports = {
   router,
 };

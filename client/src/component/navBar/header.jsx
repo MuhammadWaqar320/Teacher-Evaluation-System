@@ -1,16 +1,22 @@
-import React from 'react';
+import React from "react";
 import "./header.css";
-import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import Offcanvas from 'react-bootstrap/Offcanvas';
+import { Link } from "react-router-dom";
+import Dropdown from "react-bootstrap/Dropdown";
+import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import Offcanvas from "react-bootstrap/Offcanvas";
 import logo from "../../assets/images/logo.png";
-import { AiTwotoneHome } from "react-icons/ai";
-import Login from '../../views/login/login';
-const Header= () => {
-    const [modalShow, setModalShow] = React.useState(false);
+import Login from "../../views/login/login";
+
+import { logOut } from "../../utils/utilsFunctions";
+import { useEffect } from "react";
+import { isAuthenticated } from "../../utils/utilsFunctions";
+import RoutesName from "../../routes/routesName";
+const Header = () => {
+  const [modalShow, setModalShow] = React.useState(false);
   return (
     <>
       {["sm"].map((expand) => (
@@ -41,46 +47,117 @@ const Header= () => {
               </Offcanvas.Header>
               <Offcanvas.Body>
                 <Nav className="justify-content-center flex-grow-1 pe-3">
-                  <Nav.Link href="/" className="navlinks">
+                  <Nav.Link>
                     {" "}
-                    Home
+                    <Link to="/" className="navlinks">
+                      {" "}
+                      Home{" "}
+                    </Link>
                   </Nav.Link>
-
-                  <Nav.Link href="/contact" className="navlinks">
-                    Contact Us
+                  <Nav.Link>
+                    {" "}
+                    <Link to="/contact" className="navlinks">
+                      {" "}
+                      Contact Us{" "}
+                    </Link>
                   </Nav.Link>
-                  <Nav.Link href="/about" className="navlinks">
-                    About Us
+                  <Nav.Link>
+                    {" "}
+                    <Link to="/about" className="navlinks">
+                      {" "}
+                      About Us{" "}
+                    </Link>
                   </Nav.Link>
                 </Nav>
-                <div className="display-for-large-device">
-                  <Form className="d-flex ">
-                    <Button
-                      variant="outline-light"
-                      bg="blue"
-                      style={{ marginRight: "10px" }}
-                      onClick={() => setModalShow(true)}
-                    >
-                      Login
-                    </Button>
-                    <Button variant="outline-light" bg="blue">
-                      Register
-                    </Button>
-                  </Form>
-                </div>
+                {!isAuthenticated() ? (
+                  <div>
+                    <div className="display-for-large-device">
+                      <Form className="d-flex ">
+                        <Button
+                          variant="outline-light"
+                          bg="blue"
+                          style={{ marginRight: "10px" }}
+                          onClick={() => setModalShow(true)}
+                        >
+                          Login
+                        </Button>
+                        <Button variant="outline-light">
+                          <Link to="/register" className="regisBtn">
+                            Register{" "}
+                          </Link>
+                        </Button>
+                      </Form>
+                    </div>
 
-                <div className="display-for-mobile">
-                  <Form className="d-flex ">
-                    <Button
-                      variant="outline-success"
-                      style={{ marginRight: "10px" }}
-                      onClick={() => setModalShow(true)}
+                    <div className="display-for-mobile">
+                      <Form className="d-flex ">
+                        <Button
+                          variant="outline-success"
+                          style={{ marginRight: "10px" }}
+                          onClick={() => setModalShow(true)}
+                        >
+                          Login
+                        </Button>
+                        <Button variant="outline-success">
+                          <Link
+                            to="/register"
+                            className=" register-mobile-class"
+                          >
+                            Register{" "}
+                          </Link>{" "}
+                        </Button>
+                      </Form>
+                    </div>
+                  </div>
+                ) : (
+                  <Dropdown>
+                    <Dropdown.Toggle
+                      variant="outline-light"
+                      id="dropdown-basic"
                     >
-                      Login
-                    </Button>
-                    <Button variant="outline-success">Register</Button>
-                  </Form>
-                </div>
+                      Well Come {localStorage.getItem("user_name")}
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                      <Dropdown.Item>
+                        {localStorage.getItem("type") === "3" ? (
+                          <Link
+                            to={RoutesName.AdminDashboard.route}
+                            style={{ textDecoration: "none", color: "black" }}
+                          >
+                            Dashboard
+                          </Link>
+                        ) : (
+                          ""
+                        )}
+                        {localStorage.getItem("type") === "2" ? (
+                          <Link
+                            to={RoutesName.StudentDashboard.route}
+                            style={{ textDecoration: "none", color: "black" }}
+                          >
+                            Dashboard
+                          </Link>
+                        ) : (
+                          ""
+                        )}
+                        {localStorage.getItem("type") === "1" ? (
+                          <Link
+                            to={RoutesName.TeacherDashboard.route}
+                            style={{ textDecoration: "none", color: "black" }}
+                          >
+                            Dashboard
+                          </Link>
+                        ) : (
+                          ""
+                        )}
+                      </Dropdown.Item>
+                      <Dropdown.Item href="/" onClick={logOut}>
+                        Logout
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                )}
+
                 <Login show={modalShow} onHide={() => setModalShow(false)} />
               </Offcanvas.Body>
             </Navbar.Offcanvas>
