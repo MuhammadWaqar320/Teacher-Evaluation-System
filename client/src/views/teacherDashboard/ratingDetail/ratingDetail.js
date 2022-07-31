@@ -54,54 +54,58 @@ const RatingDetail = () => {
     },[])
     return (
       <>
-        <TableContainer component={Paper}>
-          <div>
-            <h2 style={{ textAlign: "center" }}>Rating Detail</h2>
-          </div>
-          <Table sx={{ minWidth: 700 }} aria-label="customized table">
-            <TableHead>
-              <TableRow>
-                {header.map((item) => (
-                  <StyledTableCell align="center">{item} </StyledTableCell>
+        {data.length > 0 ? (
+          <TableContainer component={Paper}>
+            <div>
+              <h2 style={{ textAlign: "center" }}>Rating Detail</h2>
+            </div>
+            <Table sx={{ minWidth: 700 }} aria-label="customized table">
+              <TableHead>
+                <TableRow>
+                  {header.map((item) => (
+                    <StyledTableCell align="center">{item} </StyledTableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {data.map((row) => (
+                  <StyledTableRow key={row.id}>
+                    <StyledTableCell align="center" component="th" scope="row">
+                      {row.Student.id}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {row.Student.name}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {row.Student.semester}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {row.Student.department}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {row.no_of_star}{" "}
+                      <StarPurple500Icon
+                        fontSize="14px"
+                        style={{ marginBottom: "3px", color: "red" }}
+                      />
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {row.feedback}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {row.type_of_feedback}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
+                      {row.createdAt}
+                    </StyledTableCell>
+                  </StyledTableRow>
                 ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {data.map((row) => (
-                <StyledTableRow key={row.id}>
-                  <StyledTableCell align="center" component="th" scope="row">
-                    {row.Student.id}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
-                    {row.Student.name}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
-                    {row.Student.semester}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
-                    {row.Student.department}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
-                    {row.no_of_star}{" "}
-                    <StarPurple500Icon
-                      fontSize="14px"
-                      style={{ marginBottom: "3px", color: "red" }}
-                    />
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
-                    {row.feedback}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
-                    {row.type_of_feedback}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
-                    {row.createdAt}
-                  </StyledTableCell>
-                </StyledTableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+              </TableBody>
+            </Table>
+          </TableContainer>
+        ) : (
+          "No Data found"
+        )}
       </>
     );
 }

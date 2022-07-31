@@ -96,61 +96,69 @@ const StudentViewProfile = ({ hide, show }) => {
   };
   return (
     <>
-      <TableContainer component={Paper}>
-        <div>
-          <h2 style={{ textAlign: "center" }}>Rating Information</h2>
-        </div>
-        <Table sx={{ minWidth: 700 }} aria-label="customized table">
-          <TableHead>
-            <TableRow>
-              {header.map((item) => (
-                <StyledTableCell align="center">{item} </StyledTableCell>
+      {data.length > 0 ? (
+        <TableContainer component={Paper}>
+          <div>
+            <h2 style={{ textAlign: "center" }}>Rating Information</h2>
+          </div>
+          <Table sx={{ minWidth: 700 }} aria-label="customized table">
+            <TableHead>
+              <TableRow>
+                {header.map((item) => (
+                  <StyledTableCell align="center">{item} </StyledTableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {data.map((row) => (
+                <StyledTableRow key={row.id}>
+                  <StyledTableCell align="center" component="th" scope="row">
+                    {row.Teacher.id}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {row.Teacher.name}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {row.feedback}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {row.no_of_star}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {row.type_of_feedback}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    <span
+                      role="button"
+                      onClick={() => {
+                        handleRateEditModal(row);
+                      }}
+                    >
+                      <EditIcon />
+                    </span>
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    <span
+                      role="button"
+                      onClick={() => deleteRecord(row.StudentId, row.TeacherId)}
+                    >
+                      <DeleteIcon />
+                    </span>
+                  </StyledTableCell>
+                </StyledTableRow>
               ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.map((row) => (
-              <StyledTableRow key={row.id}>
-                <StyledTableCell align="center" component="th" scope="row">
-                  {row.Teacher.id}
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  {row.Teacher.name}
-                </StyledTableCell>
-                <StyledTableCell align="center">{row.feedback}</StyledTableCell>
-                <StyledTableCell align="center">
-                  {row.no_of_star}
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  {row.type_of_feedback}
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  <span
-                    role="button"
-                    onClick={() => {
-                      handleRateEditModal(row);
-                    }}
-                  >
-                    <EditIcon />
-                  </span>
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  <span
-                    role="button"
-                    onClick={() => deleteRecord(row.StudentId, row.TeacherId)}
-                  >
-                    <DeleteIcon />
-                  </span>
-                </StyledTableCell>
-              </StyledTableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      ) : (
+        "No Data Found"
+      )}
       {showModal ? (
         <EditRatingModal
           show={showModal}
-          hide={ () => { setShowModal(false) } }
+          hide={() => {
+            setShowModal(false);
+          }}
           data={ratingObj}
         />
       ) : (

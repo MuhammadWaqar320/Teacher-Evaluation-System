@@ -52,7 +52,8 @@ const AllocatedCourse = () => {
     console.log(data)
     return (
       <>
-        <TableContainer component={Paper}>
+        {
+          data.length>0? <TableContainer component={Paper}>
           <div>
             <h2 style={{ textAlign: "center" }}>Allocated Courses Detail</h2>
           </div>
@@ -90,7 +91,8 @@ const AllocatedCourse = () => {
               ))}
             </TableBody>
           </Table>
-        </TableContainer>
+        </TableContainer>:"No Data found"
+       }
       </>
     );
 }

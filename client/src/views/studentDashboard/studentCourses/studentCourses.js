@@ -57,44 +57,48 @@ const StudentCourses = () => {
   }, []);
   return (
     <>
-      <TableContainer component={Paper}>
-        <div>
-          <h2 style={{ textAlign: "center" }}>All Course</h2>
-        </div>
-        <Table sx={{ minWidth: 700 }} aria-label="customized table">
-          <TableHead>
-            <TableRow>
-              {header.map((item) => (
-                <StyledTableCell align="center">{item} </StyledTableCell>
+      {data.length > 0 ? (
+        <TableContainer component={Paper}>
+          <div>
+            <h2 style={{ textAlign: "center" }}>All Course</h2>
+          </div>
+          <Table sx={{ minWidth: 700 }} aria-label="customized table">
+            <TableHead>
+              <TableRow>
+                {header.map((item) => (
+                  <StyledTableCell align="center">{item} </StyledTableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {data.map((row) => (
+                <StyledTableRow key={row.id}>
+                  <StyledTableCell component="th" align="center" scope="row">
+                    {row.id}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {row.course_name}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {row.course_code}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {row.credit_hours}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {row.Teacher.id}
+                  </StyledTableCell>
+                  <StyledTableCell align="center">
+                    {row.Teacher.name}
+                  </StyledTableCell>
+                </StyledTableRow>
               ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.map((row) => (
-              <StyledTableRow key={row.id}>
-                <StyledTableCell component="th" align="center" scope="row">
-                  {row.id}
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  {row.course_name}
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  {row.course_code}
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  {row.credit_hours}
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  {row.Teacher.id}
-                </StyledTableCell>
-                <StyledTableCell align="center">
-                  {row.Teacher.name}
-                </StyledTableCell>
-              </StyledTableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      ) : (
+        "No Data found"
+      )}
     </>
   );
 };
