@@ -98,7 +98,7 @@ const StudentAllTeachers = () => {
               aria-label="Search teacher by name"
               style={{ border: "1px solid #185047" }}
             />
-            <Button style={{ background: "#185047" }} type="submit">
+            <Button style={{ background: "#185047" }} disabled={data.length>0?false:true} type="submit">
               Search
             </Button>
           </Form>
@@ -162,7 +162,7 @@ const StudentAllTeachers = () => {
         ) : (
           "No Teacher Found"
         )
-      ) : (
+      ) : data.length > 0 ? (
         <TableContainer component={Paper}>
           <div>
             <h2 style={{ textAlign: "center" }}></h2>
@@ -215,6 +215,8 @@ const StudentAllTeachers = () => {
             </TableBody>
           </Table>
         </TableContainer>
+      ) : (
+        "No Data Found"
       )}
 
       {show ? (

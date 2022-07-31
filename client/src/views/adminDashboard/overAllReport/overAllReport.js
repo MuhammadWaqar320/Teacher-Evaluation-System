@@ -10,7 +10,10 @@ import { logOut } from "../../../utils/utilsFunctions";
 import LogoutIcon from "@mui/icons-material/Logout";
 import CssBaseline from "@mui/material/CssBaseline";
 import Typography from "@mui/material/Typography";
-import { calculateAvgRating, removeDoubleValues } from "../../../utils/utilsFunctions";
+import {
+  calculateAvgRating,
+  removeDoubleValues,
+} from "../../../utils/utilsFunctions";
 import Divider from "@mui/material/Divider";
 import SummarizeIcon from "@mui/icons-material/Summarize";
 import IconButton from "@mui/material/IconButton";
@@ -32,7 +35,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import DeleteIcon from "@mui/icons-material/Delete";
-import logo from "../../../assets/images/logo.png"
+import logo from "../../../assets/images/logo.png";
 import { Link } from "react-router-dom";
 import swal from "sweetalert";
 import { deleteRating } from "../../../api/adminDashboardApi";
@@ -135,18 +138,26 @@ export default function MiniDrawer() {
   const handleDrawerOpen = () => {
     setOpen(true);
   };
-const deleteRecord = async (id) => {
-  try {
-    const dbResponse = await deleteRating(id);
-    if (dbResponse.data.success) {
-      swal({
-        title: "Congratulation",
-        text: "Record has been deleted",
-        icon: "success",
-      }).then(() => {
-        window.location.href = "/admin/overallreport";
-      });
-    } else {
+  const deleteRecord = async (id) => {
+    try {
+      const dbResponse = await deleteRating(id);
+      if (dbResponse.data.success) {
+        swal({
+          title: "Congratulation",
+          text: "Record has been deleted",
+          icon: "success",
+        }).then(() => {
+          window.location.href = "/admin/overallreport";
+        });
+      } else {
+        swal({
+          title: "Sorry",
+          text: "Something is wrong try later",
+          icon: "error",
+          dangerMode: true,
+        });
+      }
+    } catch (error) {
       swal({
         title: "Sorry",
         text: "Something is wrong try later",
@@ -154,43 +165,34 @@ const deleteRecord = async (id) => {
         dangerMode: true,
       });
     }
-  } catch (error) {
-    swal({
-      title: "Sorry",
-      text: "Something is wrong try later",
-      icon: "error",
-      dangerMode: true,
-    });
-  }
-};
+  };
   const handleDrawerClose = () => {
     setOpen(false);
   };
- const [ratingData, setRatingData] = useState([]);
- const header = [
-   "Teacher Id",
-   "Teacher Name",
-   "Teacher Email",
-   "Specialization",
-   "Average Rating",
-   "Delete",
- ];
+  const [ratingData, setRatingData] = useState([]);
+  const header = [
+    "Teacher Id",
+    "Teacher Name",
+    "Teacher Email",
+    "Specialization",
+    "Average Rating",
+    "Delete",
+  ];
 
- const getOverAllRatingDetail = async () => {
-   try {
-     const response = await getOverRatingReporting();
-     if (response.success) {
-     
-       setRatingData(removeDoubleValues(response.data));
-       setLoading(false);
-     }
-   } catch (error) {
-     console.log(error.message);
-   }
- };
- useEffect(() => {
-   getOverAllRatingDetail()
- }, []);
+  const getOverAllRatingDetail = async () => {
+    try {
+      const response = await getOverRatingReporting();
+      if (response.success) {
+        setRatingData(removeDoubleValues(response.data));
+        setLoading(false);
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  useEffect(() => {
+    getOverAllRatingDetail();
+  }, []);
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -570,55 +572,61 @@ const deleteRecord = async (id) => {
             <div>
               <h2 style={{ textAlign: "center" }}>Average Rating Report</h2>
             </div>
-            <TableContainer component={Paper}>
-              <Table sx={{ minWidth: 700 }} aria-label="customized table">
-                <TableHead>
-                  <TableRow>
-                    {header.map((item) => (
-                      <StyledTableCell align="center">{item} </StyledTableCell>
-                    ))}
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {ratingData.map((row) => (
-                    <StyledTableRow key={row.Teacher.id}>
-                      <StyledTableCell
-                        align="center"
-                        component="th"
-                        scope="row"
-                      >
-                        {row.Teacher.id}
-                      </StyledTableCell>
-                      <StyledTableCell align="center">
-                        {row.Teacher.name}
-                      </StyledTableCell>
-                      <StyledTableCell align="center">
-                        {row.Teacher.email}
-                      </StyledTableCell>
-                      <StyledTableCell align="center">
-                        {row.Teacher.specialization}
-                      </StyledTableCell>
-                      <StyledTableCell align="center">
-                        {calculateAvgRating(row.Teacher.id, ratingData)}{" "}
-                        <StarPurple500Icon
-                          fontSize="14px"
-                          style={{ marginBottom: "3px", color: "red" }}
-                        />
-                      </StyledTableCell>
-
-                      <StyledTableCell align="center">
-                        <span
-                          role="button"
-                          onClick={() => deleteRecord(row.id)}
+            {ratingData.length > 0 ? (
+              <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 700 }} aria-label="customized table">
+                  <TableHead>
+                    <TableRow>
+                      {header.map((item) => (
+                        <StyledTableCell align="center">
+                          {item}{" "}
+                        </StyledTableCell>
+                      ))}
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {ratingData.map((row) => (
+                      <StyledTableRow key={row.Teacher.id}>
+                        <StyledTableCell
+                          align="center"
+                          component="th"
+                          scope="row"
                         >
-                          <DeleteIcon />
-                        </span>
-                      </StyledTableCell>
-                    </StyledTableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
+                          {row.Teacher.id}
+                        </StyledTableCell>
+                        <StyledTableCell align="center">
+                          {row.Teacher.name}
+                        </StyledTableCell>
+                        <StyledTableCell align="center">
+                          {row.Teacher.email}
+                        </StyledTableCell>
+                        <StyledTableCell align="center">
+                          {row.Teacher.specialization}
+                        </StyledTableCell>
+                        <StyledTableCell align="center">
+                          {calculateAvgRating(row.Teacher.id, ratingData)}{" "}
+                          <StarPurple500Icon
+                            fontSize="14px"
+                            style={{ marginBottom: "3px", color: "red" }}
+                          />
+                        </StyledTableCell>
+
+                        <StyledTableCell align="center">
+                          <span
+                            role="button"
+                            onClick={() => deleteRecord(row.id)}
+                          >
+                            <DeleteIcon />
+                          </span>
+                        </StyledTableCell>
+                      </StyledTableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            ) : (
+              "No Data Found"
+            )}
           </div>
         )}
       </Box>

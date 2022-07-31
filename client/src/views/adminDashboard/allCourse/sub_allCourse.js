@@ -33,8 +33,10 @@ const Sub_allCourse = () => {
        <>
          {loading ? (
            <div>Loading...</div>
-         ) : (
+         ) : allCourseData.length>0 ? (
            <TableComponent data={allCourseData} header={tableHeader} />
+         ) : (
+           "No Record Found"
          )}
        </>
      ); 

@@ -71,6 +71,7 @@ const Sub_tesReport = () => {
          {loading ? (
            <div>loading...</div>
          ) : (
+             ratingData.length>0?
            <TableContainer component={Paper}>
              <Table sx={{ minWidth: 700 }} aria-label="customized table">
                <TableHead>
@@ -116,7 +117,7 @@ const Sub_tesReport = () => {
                  ))}
                </TableBody>
              </Table>
-           </TableContainer>
+           </TableContainer>:"No Record Found"
          )}
        </>
      );
