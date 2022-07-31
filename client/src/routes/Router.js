@@ -15,6 +15,8 @@ import AddNewCourse from '../views/adminDashboard/addNewCourse/addNewCourse';
 import AddNewStudent from '../views/adminDashboard/addNewStudent/addNewStudent';
 import TesReport from '../views/adminDashboard/tesReport/tesReport';
 import OverAllReport from '../views/adminDashboard/overAllReport/overAllReport';
+import StudentViewProfile from '../views/studentDashboard/studentViewProfile/studentViewProfile';
+import ResetPassword from '../views/login/resetPassword/resetPassword';
 
 const Router = () => {
     return (
@@ -50,6 +52,16 @@ const Router = () => {
               exact
               path={RoutesName.StudentDashboard.route}
               element={<StudentDashboard />}
+            />
+            <Route
+              exact
+              path={RoutesName.ResetPassword.route}
+              element={<ResetPassword />}
+            />
+            <Route
+              exact
+              path="/student/dashboard/rated"
+              element={<StudentViewProfile />}
             />
             <Route
               exact

@@ -15,9 +15,9 @@ const KEYS = {
   SECRET_KEY: "2MOe0XHFW2ZLn!tK%E8uh7LmK",
 };
 const USER_TYPE = {
-  STUDENT: '2',
+  STUDENT: 2,
   TEACHER: 1,
-  ADMIN: '3',
+  ADMIN: 3,
 };
 const HTTP_STATUS = {
   CONTINUE: 100,

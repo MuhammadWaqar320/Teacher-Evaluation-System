@@ -16,9 +16,15 @@ const RoutesName = {
   },
   StudentDashboard: {
     route: "/student/dashboard",
+    sub: {
+      RatedInfo: { route: "/student/dashboard/rated" },
+    },
   },
   TeacherDashboard: {
     route: "/teacher/dashboard",
+  },
+  ResetPassword: {
+    route: "/user/reset/password/:email/:type",
   },
   AdminDashboard: {
     route: "/admin/dashboard",
@@ -29,7 +35,7 @@ const RoutesName = {
       AddNewCourse: { route: "/admin/addnewcourse" },
       AddNewStudent: { route: "/admin/addnewstudent" },
       TesReport: { route: "/admin/resreport" },
-      OverAllReport:{route:"/admin/overallreport"}
+      OverAllReport: { route: "/admin/overallreport" },
     },
   },
 };

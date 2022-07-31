@@ -38,7 +38,19 @@ const Sub_addNewStudent = () => {
          window.location.href = RoutesName.AdminDashboard.route;
        });  
       }
+      else {
+          swal({
+            title: "Sorry!",
+            text: "Student already registered",
+            icon: "error",
+          });
+      }
     } catch (error) {
+        swal({
+          title: "Sorry!",
+          text: "Something is went wrong",
+          icon: "error",
+        });
       console.log(error.message)
     }
   }
@@ -62,9 +74,14 @@ const Sub_addNewStudent = () => {
               <Form.Group as={Col} controlId="formGridEmail">
                 <Form.Label>Name:</Form.Label>
                 <Form.Control
+                  minLength="3"
+                  maxLength="20"
+                  pattern="[A-Z a-z]+"
+                  title="Only alphabets are allowed"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   type="text"
+                  required
                   placeholder="Enter student name"
                 />
               </Form.Group>
@@ -80,6 +97,11 @@ const Sub_addNewStudent = () => {
                   value={fname}
                   onChange={(e) => setFname(e.target.value)}
                   placeholder="Enter father name of student"
+                  minLength="3"
+                  maxLength="20"
+                  pattern="[A-Z a-z]+"
+                  title="Only alphabets are allowed"
+                  required
                 />
               </Form.Group>
             </Row>
@@ -91,6 +113,7 @@ const Sub_addNewStudent = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter student email"
+                  required
                 />
               </Form.Group>
               <Form.Group as={Col} controlId="formGridEmail">
@@ -115,6 +138,10 @@ const Sub_addNewStudent = () => {
                 <Form.Label>Phone No:</Form.Label>
                 <Form.Control
                   type="tel"
+                  minLength="10"
+                  maxLength="12"
+                  pattern="[0-9-]+"
+                  title="Only numbers are allowed(0-9) "
                   placeholder="Enter student phone no"
                   value={phoneNo}
                   onChange={(e) => setPhoneNo(e.target.value)}
@@ -129,6 +156,10 @@ const Sub_addNewStudent = () => {
                 <Form.Label>Department</Form.Label>
                 <Form.Control
                   type="text"
+                  minLength="3"
+                  maxLength="20"
+                  pattern="[A-Z a-z]+"
+                  title="Only alphabets are allowed"
                   placeholder="Enter department of student"
                   value={department}
                   onChange={(e) => setDepartment(e.target.value)}
@@ -141,6 +172,10 @@ const Sub_addNewStudent = () => {
                 <Form.Control
                   type="text"
                   value={cnic}
+                  minLength="10"
+                  maxLength="12"
+                  pattern="[0-9-]+"
+                  title="Only numbers are allowed(0-9) "
                   onChange={(e) => setCnic(e.target.value)}
                   placeholder="Enter student cnic"
                 />

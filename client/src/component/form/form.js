@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState} from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import "./form.css";
@@ -7,6 +7,7 @@ import loginPic from "../../assets/images/loginPic.png";
 import { LoginApi } from "../../api/authApi";
 import { isAuthenticated } from "../../utils/utilsFunctions";
 const FormCom = ({ hideModal }) => {
+
   const login_type = [
     { type: "Teacher", key: 1 },
     { type: "Student", key: 2 },
@@ -14,7 +15,7 @@ const FormCom = ({ hideModal }) => {
   ];
   const [email, setEmail] =React.useState("")
   const [password, setPassword] =React.useState("")
-  const [type, setType] =React.useState(1)
+  const [type, setType] = React.useState(1)
   const onSubmitHandle=async(e)=>{
     e.preventDefault();
     const payload = {
@@ -51,6 +52,9 @@ const FormCom = ({ hideModal }) => {
                 placeholder="Enter your email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required
+                minLength="6"
+                maxLength="50"
               />
             </Form.Group>
 
@@ -61,16 +65,28 @@ const FormCom = ({ hideModal }) => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter your password"
+                required
+                minLength="4"
+                maxLength="20"
               />
             </Form.Group>
             <Form.Text>
               <Form.Label> Login as a:</Form.Label>
             </Form.Text>
-            <Form.Select size="sm" className="mb-4" onChange={(e)=>setType(e.target.value)}>
+            <Form.Select
+              size="sm"
+              className="mb-4"
+              onChange={(e) => setType(e.target.value)}
+            >
               {login_type.map((item) => {
-                return <option key={item.key} value={item.key}>{item.type} </option>;
+                return (
+                  <option key={item.key} value={item.key}>
+                    {item.type}{" "}
+                  </option>
+                );
               })}
             </Form.Select>
+
             <Button
               variant="primary"
               type="submit"

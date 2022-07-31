@@ -112,6 +112,7 @@ export default function MiniDrawer() {
   const [displayAllocatedCourse, setDisplayAllocatedCourse] = useState(false);
   const [displayEditProfile, setDisplayEditProfile] = useState(false);
   const [displayRatingDetail, setDisplayRatingDetail] = useState(false);
+    const [showModal, setShowModal] = useState(false);
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -144,7 +145,10 @@ export default function MiniDrawer() {
             </Link>
           </Typography>
           <Typography noWrap component="div" style={{ marginLeft: "auto" }}>
-            Well Come {localStorage.getItem("user_name")}
+            Well Come{" "}
+            <span style={{ color: "yellow" }}>
+              {localStorage.getItem("user_name")}
+            </span>
           </Typography>
         </Toolbar>
       </AppBar>
@@ -179,7 +183,7 @@ export default function MiniDrawer() {
                   justifyContent: "center",
                 }}
               >
-              <span
+                <span
                   role="button"
                   onClick={() => {
                     setDisplayDashboard(true);
@@ -208,53 +212,7 @@ export default function MiniDrawer() {
               </ListItemText>
             </ListItemButton>
           </ListItem>
-          <ListItem
-            disablePadding
-            sx={{ display: "block", borderBottom: "1px solid silver" }}
-          >
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-               <span
-                  role="button"
-                  onClick={() => {
-                    setDisplayDashboard(false);
-                    setDisplayViewProfile(true);
-                    setDisplayAllocatedCourse(false);
-                    setDisplayEditProfile(false);
-                    setDisplayRatingDetail(false);
-                  }}
-                >
-                  <ListIcon />
-                </span>
-              </ListItemIcon>
-              <ListItemText sx={{ opacity: open ? 1 : 0 }}>
-                <span
-                  role="button"
-                  onClick={() => {
-                    setDisplayDashboard(false);
-                    setDisplayViewProfile(true);
-                    setDisplayAllocatedCourse(false);
-                    setDisplayEditProfile(false);
-                    setDisplayRatingDetail(false);
-                  }}
-                >
-                  View Profile{" "}
-                </span>
-              </ListItemText>
-            </ListItemButton>
-          </ListItem>
+
           {/* all student list */}
           <ListItem
             disablePadding
@@ -322,7 +280,7 @@ export default function MiniDrawer() {
                   justifyContent: "center",
                 }}
               >
-               <span
+                <span
                   role="button"
                   onClick={() => {
                     setDisplayDashboard(false);
@@ -378,6 +336,7 @@ export default function MiniDrawer() {
                     setDisplayAllocatedCourse(false);
                     setDisplayEditProfile(true);
                     setDisplayRatingDetail(false);
+                    setShowModal(true)
                   }}
                 >
                   <ListIcon />
@@ -392,9 +351,10 @@ export default function MiniDrawer() {
                     setDisplayAllocatedCourse(false);
                     setDisplayEditProfile(true);
                     setDisplayRatingDetail(false);
+                    setShowModal(true);
                   }}
                 >
-                  Edit Profile{" "}
+                  Change Password{" "}
                 </span>
               </ListItemText>
             </ListItemButton>
@@ -442,10 +402,19 @@ export default function MiniDrawer() {
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
         {displayDashboard ? <Slider /> : ""}
-        {displayAllocatedCourse ? <AllocatedCourse/> : ""}
-        {displayEditProfile ? <EditTeacherProfile/> : ""}
-        {displayRatingDetail ? <RatingDetail/> : ""}
-        {displayViewProfile ? <ViewTeacherProfile/> : ""}
+        {displayAllocatedCourse ? <AllocatedCourse /> : ""}
+        {displayEditProfile ? (
+          <EditTeacherProfile
+            show={showModal}
+            hide={() => {
+              setShowModal(false);
+            }}
+          />
+        ) : (
+          ""
+        )}
+        {displayRatingDetail ? <RatingDetail /> : ""}
+        {displayViewProfile ? <ViewTeacherProfile /> : ""}
       </Box>
     </Box>
   );

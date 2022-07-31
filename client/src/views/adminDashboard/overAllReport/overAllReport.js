@@ -609,7 +609,7 @@ const deleteRecord = async (id) => {
                       <StyledTableCell align="center">
                         <span
                           role="button"
-                          onClick={() => deleteRecord(row.TeacherId)}
+                          onClick={() => deleteRecord(row.id)}
                         >
                           <DeleteIcon />
                         </span>

@@ -47,8 +47,20 @@ const Sub_addNewCourse = () => {
              window.location.href = RoutesName.AdminDashboard.route;
            });
          }
+         else {
+             swal({
+               title: "Sorry!",
+               text: "course already registered",
+               icon: "error",
+             });
+         }
        } catch (error) {
          console.log(error.message);
+           swal({
+             title: "Sorry!",
+             text: "Something is went wrong",
+             icon: "error",
+           });
        }
      };
   return (
@@ -74,6 +86,11 @@ const Sub_addNewCourse = () => {
                 onChange={(e) => setCourseName(e.target.value)}
                 type="text"
                 placeholder="Enter course name"
+                minLength="3"
+                maxLength="20"
+                pattern="[A-Z a-z]+"
+                title="Only alphabets are allowed"
+                required
               />
             </Form.Group>
 
@@ -82,6 +99,8 @@ const Sub_addNewCourse = () => {
               <Form.Control
                 type="text"
                 value={course_code}
+                minLength="3"
+                maxLength="20"
                 onChange={(e) => setCourseCode(e.target.value)}
                 placeholder="Enter course code"
               />
@@ -92,6 +111,10 @@ const Sub_addNewCourse = () => {
               <Form.Control
                 type="text"
                 value={course_hours}
+                minLength="10"
+                maxLength="12"
+                pattern="[0-9-]+"
+                title="Only numbers are allowed(0-9) "
                 onChange={(e) => setCourseHour(e.target.value)}
                 placeholder="Enter credit hours"
               />
@@ -102,6 +125,7 @@ const Sub_addNewCourse = () => {
                 style={{ height: "38px" }}
                 onChange={(e) => setSemester(e.target.value)}
                 className="mb-1"
+                required
               >
                 {allSemester.map((item) => {
                   return (
@@ -118,6 +142,7 @@ const Sub_addNewCourse = () => {
                 style={{ height: "38px" }}
                 onChange={(e) => setTeacherId(e.target.value)}
                 className="mb-4"
+                required
               >
                 {allTeacher.map((item) => {
                   return (

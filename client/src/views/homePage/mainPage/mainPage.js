@@ -3,12 +3,15 @@ import "./mainPage.css";
 import Header from '../../../component/navBar/header';
 import Slider from '../../../component/slider/slider';
 import Footer from '../../../component/footer/footer';
-
+import CdCounter from '../../../component/countDownCounter/cdCounter';
+import SignInOption from '../../../component/countDownCounter/SignInOption';
 const MainPage = () => {
     return (
       <>
         <Header />
-        <Slider/>
+        <Slider />
+        <CdCounter />
+        <SignInOption/>
         <Footer/>
       </>
     );

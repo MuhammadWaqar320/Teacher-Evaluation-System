@@ -1,4 +1,7 @@
 const { Student } = require("../models");
+const { Rating } = require("../models");
+const { Teacher } = require("../models");
+
 module.exports = class studentRepo {
   addStudentInToDb(newAdminData) {
     return Student.create(newAdminData);
@@ -13,6 +16,12 @@ module.exports = class studentRepo {
       },
     });
   }
+  getStudentRatingInformationFromDb(id) {
+    return Rating.findAll({
+      where: { StudentId: id },
+      include: [Student, Teacher],
+    });
+  }
   getStudentInfoByIdFromDb(id) {
     return Student.findOne({
       where: {
@@ -20,11 +29,16 @@ module.exports = class studentRepo {
       },
     });
   }
+  getStudentByEmail(email) {
+    return Student.findOne({ where: { email: email } });
+  }
+  addRatingInToDb(data) {
+    return Rating.create(data);
+  }
   updateStudentFromDb(newData, id) {
     return Student.update(newData, { where: { id: id } });
   }
-  getSutdentByEmail( email) {
-    return Student.findOne({ where: {  email: email } });
+  updateStudentFromDbByEmail(newData, email) {
+    return Student.update(newData, { where: { email: email } });
   }
 };
-

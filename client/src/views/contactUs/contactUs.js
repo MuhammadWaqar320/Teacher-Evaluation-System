@@ -59,6 +59,10 @@ const ContactUs = () => {
               <Form.Control
                 type="text"
                 value={name}
+                minLength="3"
+                maxLength="20"
+                pattern="[A-Z a-z]+"
+                title="Only alphabets are allowed"
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Enter your name"
                 required
@@ -78,6 +82,9 @@ const ContactUs = () => {
               <Form.Label>Phone No.</Form.Label>
               <Form.Control
                 type="tel"
+                minLength="10"
+                maxLength="12"
+                pattern="[0-9-]+"
                 value={phoneNo}
                 onChange={(e) => setPhoneNo(e.target.value)}
                 placeholder="Enter your phone number"
@@ -89,6 +96,10 @@ const ContactUs = () => {
               <Form.Control
                 type="text"
                 value={subject}
+                minLength="3"
+                maxLength="20"
+                pattern="[A-Z a-z]+"
+                title="Only alphabets are allowed"
                 onChange={(e) => setSubject(e.target.value)}
                 placeholder="Enter subject"
                 required
@@ -99,6 +110,9 @@ const ContactUs = () => {
               <Form.Control
                 as="textarea"
                 rows="5"
+                minLength="3"
+                pattern="[A-Z a-z]+"
+                title="Only alphabets are allowed"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="Type your message here....."

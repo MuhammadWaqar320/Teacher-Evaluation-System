@@ -44,7 +44,7 @@ const Sub_tesReport = () => {
        "Feedback",
        "Rating Based On",
        "Rating Date",
-       "Delete",
+  
      ];
     
     const  getRatingDetail=async()=>{
@@ -111,9 +111,7 @@ const Sub_tesReport = () => {
                      <StyledTableCell align="center">
                        {row.createdAt}
                      </StyledTableCell>
-                     <StyledTableCell align="center">
-                       <DeleteIcon />
-                     </StyledTableCell>
+              
                    </StyledTableRow>
                  ))}
                </TableBody>

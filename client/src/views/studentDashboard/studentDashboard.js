@@ -124,7 +124,11 @@ export default function MiniDrawer() {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open} style={{ background: "#185047" }}>
+      <AppBar
+        position="fixed"
+        open={open}
+        style={ { background: "#185047" }}
+      >
         <Toolbar>
           <IconButton
             color="inherit"
@@ -145,11 +149,17 @@ export default function MiniDrawer() {
             </Link>
           </Typography>
           <Typography noWrap component="div" style={{ marginLeft: "auto" }}>
-            Well Come {localStorage.getItem("user_name")}
+            Well Come{" "}
+            <span style={{ color: "yellow" }}>
+              {localStorage.getItem("user_name")}
+            </span>
           </Typography>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open}>
+      <Drawer
+        variant="permanent"
+        open={open}
+      >
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "rtl" ? (
@@ -254,7 +264,7 @@ export default function MiniDrawer() {
                     setDisplayAllTeacher(false);
                   }}
                 >
-                  View Profile{" "}
+                  Rated Info{" "}
                 </span>
               </ListItemText>
             </ListItemButton>
@@ -376,7 +386,7 @@ export default function MiniDrawer() {
                   justifyContent: "center",
                 }}
               >
-               <span
+                <span
                   role="button"
                   onClick={() => {
                     setDisplayDashboard(false);
@@ -448,10 +458,10 @@ export default function MiniDrawer() {
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
         {displayDashboard ? <Slider /> : ""}
-        {displayAllocatedCourse ? <StudentCourses/> : ""}
-        {displayEditProfile ? <StudentEditProfile/> : ""}
-        {displayAllTeacher ? <StudentAllTeachers/> : ""}
-        {displayViewProfile ? <StudentViewProfile/> : ""}
+        {displayAllocatedCourse ? <StudentCourses /> : ""}
+        {displayEditProfile ? <StudentEditProfile /> : ""}
+        {displayAllTeacher ? <StudentAllTeachers /> : ""}
+        {displayViewProfile ? <StudentViewProfile  /> : ""}
       </Box>
     </Box>
   );

@@ -80,6 +80,10 @@ const EditCourse = (props) => {
                 value={course_name}
                 onChange={(e) => setCourseName(e.target.value)}
                 type="text"
+                minLength="3"
+                maxLength="20"
+                pattern="[A-Z a-z]+"
+                title="Only alphabets are allowed"
                 placeholder="Enter course name"
               />
             </Form.Group>
@@ -89,6 +93,8 @@ const EditCourse = (props) => {
               <Form.Control
                 type="text"
                 value={course_code}
+                minLength="3"
+                maxLength="12"
                 onChange={(e) => setCourseCode(e.target.value)}
                 placeholder="Enter course code"
               />
@@ -98,6 +104,10 @@ const EditCourse = (props) => {
               <Form.Label> Credit Hours:</Form.Label>
               <Form.Control
                 type="text"
+                minLength="10"
+                maxLength="12"
+                pattern="[0-9-]+"
+                title="Only numbers are allowed(0-9) "
                 value={course_hours}
                 onChange={(e) => setCourseHour(e.target.value)}
                 placeholder="Enter credit hours"
@@ -112,6 +122,7 @@ const EditCourse = (props) => {
                   onChange={(e) => setSemester(e.target.value)}
                   className="mb-1"
                   value={semester}
+                  required
                 >
                   {allSemester.map((item) => {
                     return <option key={item}>{item} </option>;
@@ -124,6 +135,7 @@ const EditCourse = (props) => {
                   style={{ height: "38px" }}
                   value={teacherId}
                   className="mb-4"
+                  required
                 >
                   {allTeacher.map((item) => {
                     return (
@@ -139,10 +151,7 @@ const EditCourse = (props) => {
               </Form.Group>
             </Row>
             <Modal.Footer>
-              <Button
-                style={{ background: "#185047" }}
-                type="submit"
-              >
+              <Button style={{ background: "#185047" }} type="submit">
                 Update
               </Button>
               <Button onClick={props.onHide} className="btn-danger">

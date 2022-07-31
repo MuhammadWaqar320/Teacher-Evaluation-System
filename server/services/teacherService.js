@@ -6,6 +6,7 @@ const {
   HashPasswordUsingBcryptjs,
 } = require("../utils/allFunctions");
 const { HTTP_STATUS } = require("../utils/constant");
+const bcrypt = require("bcryptjs");
 module.exports = class TeacherService {
   async addTeacher(data) {
     const newTeacher = {
@@ -17,15 +18,33 @@ module.exports = class TeacherService {
       education: data.education,
       createdAt: new Date(),
       updatedAt: new Date(),
-      password: await HashPasswordUsingBcryptjs(data.password)
+      password: await HashPasswordUsingBcryptjs(data.password),
     };
     try {
-      const dbResponse = await TeacherRepo.addTeacherInToDb(newTeacher);
-      return successResponse(
-        dbResponse.dataValues,
-        HTTP_STATUS.CREATED,
-        "new Teacher has added successfully"
-      );
+      const isExist = await TeacherRepo.getTeacherByEmail(data.email);
+      if (isExist) {
+        return errorResponse(
+          HTTP_STATUS.INTERNAL_SERVER_ERROR,
+          "teacher is already registered",
+        );
+      }
+      else {
+        try {
+          const dbResponse = await TeacherRepo.addTeacherInToDb(newTeacher);
+          return successResponse(
+            dbResponse.dataValues,
+            HTTP_STATUS.CREATED,
+            "new Teacher has added successfully"
+          );
+        } catch (error) {
+          return errorResponse(
+            HTTP_STATUS.INTERNAL_SERVER_ERROR,
+            error.message
+          );
+        } 
+
+       }
+    
     } catch (error) {
       return errorResponse(HTTP_STATUS.INTERNAL_SERVER_ERROR, error.message);
     }
@@ -60,6 +79,48 @@ module.exports = class TeacherService {
         : successResponse([], HTTP_STATUS.NOT_FOUND, "Teacher is not exist");
     } catch (error) {
       return errorResponse(HTTP_STATUS.INTERNAL_SERVER_ERROR, error.message);
+    }
+  }
+  async getTeacherRatingInfoById(id) {
+    try {
+      const dbResponse = await TeacherRepo.getTeacherRatingInfoByIdFromDb(id);
+      return dbResponse
+        ? successResponse(dbResponse, HTTP_STATUS.OK, " data fetched")
+        : successResponse([], HTTP_STATUS.NOT_FOUND, "Teacher is not exist");
+    } catch (error) {
+      return errorResponse(HTTP_STATUS.INTERNAL_SERVER_ERROR, error.message);
+    }
+  }
+  async getAllTeacherBySemester(semester) {
+    try {
+      const dbResponse = await TeacherRepo.getAllTeacherBySemesterFromDb(
+        semester
+      );
+      return dbResponse
+        ? successResponse(dbResponse, HTTP_STATUS.OK, " data fetched")
+        : successResponse([], HTTP_STATUS.NOT_FOUND, "Teacher is not exist");
+    } catch (error) {
+      return errorResponse(HTTP_STATUS.INTERNAL_SERVER_ERROR, error.message);
+    }
+  }
+  async changeTeacherPasswordInfo(data, id) {
+    const { new_password, old_password } = data;
+    console.log(id);
+    const { dataValues } = await TeacherRepo.getTeacherInfoById(id);
+    const isMatchPassword = await bcrypt.compare(
+      old_password,
+      dataValues.password
+    );
+    console.log(isMatchPassword);
+    if (isMatchPassword) {
+      const password = await HashPasswordUsingBcryptjs(new_password);
+      const result = await TeacherRepo.updateTeacherFromDb(
+        { password: password },
+        id
+      );
+      return successResponse(result, HTTP_STATUS.OK, "password updated");
+    } else {
+      return errorResponse(HTTP_STATUS.NOT_FOUND, "wrong password");
     }
   }
   async updateTeacherInfo(data, id) {

@@ -80,6 +80,10 @@ const Registration = () => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Enter your name"
+                minLength="3"
+                maxLength="20"
+                pattern="[A-Z a-z]+"
+                title="Only alphabets are allowed"
                 required
               />
             </Form.Group>
@@ -88,6 +92,10 @@ const Registration = () => {
               <Form.Control
                 type="text"
                 value={f_name}
+                minLength="3"
+                maxLength="20"
+                pattern="[A-Z a-z]+"
+                title="Only alphabets are allowed"
                 onChange={(e) => setFName(e.target.value)}
                 placeholder="Enter your father name"
                 required
@@ -108,6 +116,10 @@ const Registration = () => {
               <Form.Control
                 type="tel"
                 value={phoneNo}
+                minLength="10"
+                maxLength="12"
+                pattern="[0-9-]+"
+                title="Only numbers are allowed(0-9) "
                 onChange={(e) => setPhoneNo(e.target.value)}
                 placeholder="Enter your phone number"
                 required
@@ -118,6 +130,8 @@ const Registration = () => {
               <Form.Control
                 type="password"
                 value={password}
+                minLength="6"
+                maxLength="20"
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter your password"
                 required
@@ -128,6 +142,10 @@ const Registration = () => {
               <Form.Control
                 type="text"
                 value={education}
+                minLength="3"
+                maxLength="20"
+                pattern="[A-Z a-z]+"
+                title="Only alphabets are allowed"
                 onChange={(e) => setEducation(e.target.value)}
                 placeholder="Enter your education"
                 required
@@ -137,6 +155,10 @@ const Registration = () => {
               <Form.Label>Specialization</Form.Label>
               <Form.Control
                 value={specialization}
+                minLength="3"
+                maxLength="20"
+                pattern="[A-Z a-z]+"
+                title="Only alphabets are allowed"
                 onChange={(e) => setSpecialization(e.target.value)}
                 placeholder="Enter your specialization"
                 required

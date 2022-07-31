@@ -1,7 +1,8 @@
 import { BASE_URL } from "../utils/constant";
-import { get } from "./httpService";
+import { create, get, getById, update } from "./httpService";
 const LOGIN_URL = `${BASE_URL}/tes/login`;
-
+const FORGET_PASSWORD = `${BASE_URL}/tes/forgotpassword`;
+const RESET_PASS = `${BASE_URL}/user/reset/password`;
 export const LoginApi = async (payload) => {
   const responseData = await get(LOGIN_URL, payload);
   if (responseData.success) {
@@ -12,3 +13,9 @@ export const LoginApi = async (payload) => {
   }
   return responseData;
 };
+export const sendEmailForPassword = (email,type) => {
+  return create(`${FORGET_PASSWORD}`,{email:email,type:type})
+}
+export const ResetPasswordApi = (payload,email,type) => {
+  return create(`${RESET_PASS}/${email}/${type}`,payload)
+}
