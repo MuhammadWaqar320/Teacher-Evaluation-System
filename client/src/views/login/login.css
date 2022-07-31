@@ -1,0 +1,9 @@
+.forgot-class{
+  text-align: right;
+   margin: 0px 30px 20px 0px;
+}
+.forgot-class:hover{
+  color: blue;
+  cursor: pointer;
+  
+}

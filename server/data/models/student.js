@@ -14,8 +14,8 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "student_id",
       });
       Student.belongsToMany(models.Teacher, {
-        through: "Rating",
-        foreignKey: "student_id",
+        through: models.Rating,
+        foreignKey: "StudentId",
       });
     }
   }
@@ -28,6 +28,7 @@ module.exports = (sequelize, DataTypes) => {
       department: DataTypes.STRING,
       semester: DataTypes.STRING,
       password: DataTypes.STRING,
+      cnic:DataTypes.STRING
     },
     {
       sequelize,

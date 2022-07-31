@@ -23,9 +23,14 @@ const getCourseById = async (req, res) => {
   const responseData = await CourseService.getCourseInfoById(req.params.id);
   return constructResponse(res, responseData);
 };
+const getCourseByTeacherId = async (req, res) => {
+  const responseData = await CourseService.getCourseInfoByTeacherId(req.params.id);
+  return constructResponse(res, responseData);
+};
 module.exports = {
   createCourse,
   retreiveAllCourse,
+  getCourseByTeacherId,
   updateCourse,
   deleteCourse,
   getCourseById,

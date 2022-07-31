@@ -12,6 +12,7 @@ const {
   errorResponse,
   successResponse,
   generateJsonWebToken,
+  HashPasswordUsingBcryptjs
 } = require("../utils/allFunctions");
 const teacherRepo = new (require("../data/repo/teacherRepo"))();
 const studentRepo = new (require("../data/repo/studentRepo"))();
@@ -19,12 +20,14 @@ const adminRepo = new (require("../data/repo/adminRepo"))();
 module.exports = class authService {
   async loginService(data) {
     const { email, password, user_type } = data;
+    const uType = Number(user_type)
+    console.log(uType)
     let dbResponse = {};
-    if (user_type) {
-      if (user_type === USER_TYPE.TEACHER) {
+    if (uType) {
+      if (uType === USER_TYPE.TEACHER) {
         dbResponse = await teacherRepo.getTeacherByEmail(email);
-      } else if (user_type === USER_TYPE.STUDENT) {
-        dbResponse = await studentRepo.getSutdentByEmail(email);
+      } else if (uType === USER_TYPE.STUDENT) {
+        dbResponse = await studentRepo.getStudentByEmail(email);
       } else {
         dbResponse = await adminRepo.getAdminByEmail(email);
       }
@@ -52,11 +55,15 @@ module.exports = class authService {
             console.log("mail has been sent");
           }
         });
-        return successResponse({ token: token }, HTTP_STATUS.OK, "logged in");
+        return successResponse(
+          { token: token, type: uType, userInfo: dbResponse.dataValues },
+          HTTP_STATUS.OK,
+          "logged in"
+        );
       } else {
         return errorResponse(
           HTTP_STATUS.UNAUTHORIZED,
-          "sorry invalid credentials",
+          "sorry invalid credentials1",
           []
         );
       }
@@ -68,7 +75,65 @@ module.exports = class authService {
       );
     }
   }
+  async ResetPasswordService(password, email, type) {
+    console.log(password)
+    const hashedPassword =await HashPasswordUsingBcryptjs(password);
+         if (type === USER_TYPE.ADMIN) {
+           try {
+              const dbResponse = await adminRepo.updateAdminFromDbByEmail(
+                { password: hashedPassword },
+                email
+              );
+              return successResponse(dbResponse, HTTP_STATUS.OK, "reset");
+           } catch (error) {
+              return errorResponse(
+                HTTP_STATUS.INTERNAL_SERVER_ERROR,
+                error.message
+              );
+           }
+         
+         }
+         else if (type === USER_TYPE.TEACHER) {
+           try {
+                const dbResponse = await teacherRepo.updateTeacherFromDbByEmail(
+                  { password: hashedPassword },
+                  email
+                );
+                return successResponse(dbResponse, HTTP_STATUS.OK, "reset");   
+           } catch (error) {
+              return errorResponse(
+                HTTP_STATUS.INTERNAL_SERVER_ERROR,
+                error.message
+              );
+           }
+         
+           
+         }
+         else if (type === USER_TYPE.STUDENT) {
+           try {
+               const dbResponse = await studentRepo.updateStudentFromDbByEmail(
+                 { password: hashedPassword },
+                 email
+               );
+               return successResponse(dbResponse, HTTP_STATUS.OK, "reset");   
+           } catch (error) {
+              return errorResponse(
+                HTTP_STATUS.INTERNAL_SERVER_ERROR,
+                error.message
+              );
+           }
+         
+         }
+         else {
+           
+            return errorResponse(
+              HTTP_STATUS.NOT_FOUND,
+              "type is not correct"
+            );
+         }
+  }
   async forgotPasswordService(email, type) {
+
     try {
       let isUserExist = {};
       if (type) {
@@ -81,20 +146,22 @@ module.exports = class authService {
         }
       }
       if (isUserExist) {
+            const url = "http://localhost:3000/user/reset/password/";
         let mailOptions = {
           from: process.env.EMAIL,
           to: email,
           subject: "Reset Password",
-          text: `Dear user please click on below link to reset your password ${new Date()}`,
+          text: `Dear user please click on below link to reset your password ${new Date()} \n ${url}/${email}/${type}`,
         };
         transporter.sendMail(mailOptions, (error) => {
           if (error) {
+            console.log(error);
             return errorResponse(
               HTTP_STATUS.BAD_REQUEST,
               `Email could not sent due to this reason : ${error}`,
               []
             );
-            console.log(error);
+         
           }
         });
         return successResponse([], HTTP_STATUS.OK, "Please check your gmail");

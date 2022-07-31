@@ -23,10 +23,20 @@ const getStudentById = async (req, res) => {
   const responseData = await studentService.getStudentInfoById(req.params.id);
   return constructResponse(res, responseData);
 };
+const createRating = async (req, res) => {
+  const responseData = await studentService.addRating(req.body);
+  return constructResponse(res, responseData);
+};
+const getStudentRatingInfo = async (req, res) => {
+  const responseData = await studentService.getStudentRatingInformation(req.params.id);
+  return constructResponse(res, responseData);
+};
 module.exports = {
   createStudent,
   retreiveAllStudent,
   updateStudent,
   deleteStudent,
   getStudentById,
+  createRating,
+  getStudentRatingInfo,
 };

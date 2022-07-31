@@ -12,19 +12,34 @@ module.exports = class CourseService {
       credit_hours: data.credit_hours,
       courseForWhichSemester: data.courseForWhichSemester,
       course_name: data.course_name,
+      TeacherId: data.TeacherId,
       createdAt: new Date(),
       updatedAt: new Date(),
     };
-    try {
-      const dbResponse = await CourseRepo.addCourseInToDb(newCourse);
-      return successResponse(
-        dbResponse.dataValues,
-        HTTP_STATUS.CREATED,
-        "new Course has added successfully"
-      );
-    } catch (error) {
+   try {
+     const isExist = await CourseRepo.getCourseByCode(data.course_code);
+     if (isExist) {
+        return errorResponse(HTTP_STATUS.INTERNAL_SERVER_ERROR, "course already added");
+     }
+     else {
+         try {
+           const dbResponse = await CourseRepo.addCourseInToDb(newCourse);
+           return successResponse(
+             dbResponse.dataValues,
+             HTTP_STATUS.CREATED,
+             "new Course has added successfully"
+           );
+         } catch (error) {
+           return errorResponse(
+             HTTP_STATUS.INTERNAL_SERVER_ERROR,
+             error.message
+           );
+         }
+     }
+   } catch (error) {
       return errorResponse(HTTP_STATUS.INTERNAL_SERVER_ERROR, error.message);
-    }
+    
+   }
   }
   async getAllCourse() {
     try {
@@ -50,6 +65,20 @@ module.exports = class CourseService {
       return dbResponse
         ? successResponse(
             dbResponse.dataValues,
+            HTTP_STATUS.OK,
+            " data fetched"
+          )
+        : successResponse([], HTTP_STATUS.NOT_FOUND, "Course is not exist");
+    } catch (error) {
+      return errorResponse(HTTP_STATUS.INTERNAL_SERVER_ERROR, error.message);
+    }
+  }
+  async getCourseInfoByTeacherId(id) {
+    try {
+      const dbResponse = await CourseRepo.getCourseInfoByTeacherIdFromDb(id);
+      return dbResponse
+        ? successResponse(
+            dbResponse,
             HTTP_STATUS.OK,
             " data fetched"
           )

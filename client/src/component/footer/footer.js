@@ -54,8 +54,14 @@ const Footer = () => (
       </div>
     </div>
     <hr style={{ color: "white" }}></hr>
+    <div>
+      <div
+        className="sharethis-inline-share-buttons"
+        style={{ paddingBottom: "20px", paddingTop: "20px" }}
+      ></div>
+    </div>
     <div className="footer-copyright text-center py-3 link-class">
-      © 2022 Copyright:
+      <div>Developed by :<span style={{ color: "yellow" }}> (1) Muhammad Abdullah (2)Abdul Moiz</span> </div>© 2022 Copyright:
       <a href="#" className="link-class" style={{ color: "yellow" }}>
         {" "}
         Teacher Evalution Sytem.com
