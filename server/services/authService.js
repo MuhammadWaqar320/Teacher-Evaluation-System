@@ -26,6 +26,7 @@ module.exports = class authService {
     if (uType) {
       if (uType === USER_TYPE.TEACHER) {
         dbResponse = await teacherRepo.getTeacherByEmail(email);
+        
       } else if (uType === USER_TYPE.STUDENT) {
         dbResponse = await studentRepo.getStudentByEmail(email);
       } else {
@@ -33,6 +34,7 @@ module.exports = class authService {
       }
     }
     if (dbResponse) {
+      console.log("res =",dbResponse)
       const isMatchPassword = await bcrypt.compare(
         password,
         dbResponse.dataValues.password

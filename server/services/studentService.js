@@ -13,6 +13,7 @@ module.exports = class StudentService {
       length: 10,
       numbers: true,
     });
+    const hashedPassword=await HashPasswordUsingBcryptjs(_password)
     const newStudent = {
       name: data.name,
       father_name: data.father_name,
@@ -20,10 +21,10 @@ module.exports = class StudentService {
       phone_No: data.phone_no,
       department: data.department,
       semester: data.semester,
-      cnic:data.cnic,
+      cnic: data.cnic,
       createdAt: new Date(),
       updatedAt: new Date(),
-      password: await HashPasswordUsingBcryptjs(_password),
+      password: hashedPassword,
     };
     let mailOptions = {
       from: process.env.EMAIL,
