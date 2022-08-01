@@ -5,6 +5,8 @@ module.exports = {
     database: "tes-db",
     host: "localhost",
     dialect: "mysql",
+    seederStorage: "sequelize",
+    seederStorageTableName: "SequelizeSeedData",
   },
   test: {
     username: "root",
