@@ -8,7 +8,7 @@ const login = async (req, res) => {
 };
 const forgotPassword = async (req, res) => {
  console.log(req.params)
-  const responseData = await authService.forgotPasswordService(req.params.email,Number(req.params.type));
+  const responseData = await authService.forgotPasswordService(req.body.email,Number(req.body.type));
   console.log(responseData)
   return constructResponse(res, responseData);
 };

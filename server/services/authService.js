@@ -147,7 +147,8 @@ module.exports = class authService {
           isUserExist = await adminRepo.getAdminByEmail(email);
         }
       }
-      if (isUserExist) {
+      console.log("user is ",isUserExist)
+      if (Object.keys(isUserExist).length>0) {
             const url = "http://localhost:3000/user/reset/password/";
         let mailOptions = {
           from: process.env.EMAIL,

@@ -17,7 +17,7 @@ const ForgotPassword = ({ hideModal, Forgot }) => {
       const dbResponse = await sendEmailForPassword(email, type);
       console.log(dbResponse)
     try {
-      if (dbResponse.data.success) {
+      if (dbResponse.success) {
         swal({
           title: "Congratulation",
           text: "Please check your email to reset your password",
